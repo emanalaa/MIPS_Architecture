@@ -89,7 +89,38 @@ class MipsAssembler:
          "bne": ["000101", "none", "I"],
          "j": ["000010", "none", "J"]}
 
+
     def assembler(self):
-        pass
+
+        for lines in self.code:
+            line = re.findall(r"[\w']+", lines)
+            test = self.map_instruction[line[0]]
+            m_code = test[0]
+            if test[2] == "I":
+                if line[0] == "lw" or line[0] == "sw":
+                    m_code += self.reg_map[line[3]]
+                    m_code += self.reg_map[line[1]]
+                    m_code += line[2]
+                else:
+                    m_code += self.reg_map[line[1]]
+                    m_code += self.reg_map[line[2]]
+                    temp = self.mapped_labels.get(line[3])
+                    if temp is None:
+                        m_code += line[3]
+                    else:
+                        m_code += temp
+            elif test[2] == "J":
+                temp = self.mapped_labels.get(line[1])
+                if temp is None:
+                    m_code += temp
+                else:
+                    m_code += line[1]
+            elif test[2] == "R":
+                m_code += self.reg_map[line[2]]
+                m_code += self.reg_map[line[3]]
+                m_code += self.reg_map[line[1]]
+                m_code += "00000"
+                m_code += test[1]
 
 
+            machine_code = machine_code + "\n" + m_code

@@ -1,12 +1,15 @@
+import re
+
+
 def to_binary():
     pass
 
 
 class MipsAssembler:
-    def __init__(self,reg_map):
-        self.reg_map=dict(reg_map)
+    def __init__(self):
+        self.reg_map = dict()
         self.map_instructions = dict()
-
+        self.mapped_labels = dict()
 
     def read_file(self):
         pass
@@ -15,7 +18,25 @@ class MipsAssembler:
         pass
 
     def labels_mapping(self):
-        pass
+        data_counter = 0
+        code_counter = 0
+        text = False
+        for line in self.code:
+            new_line = re.findall(r"[\w']+", line)
+            while not text:
+                if new_line[0] == '.text':
+                    text = True
+                    break
+                self.mapped_labels[new_line[0]] = data_counter
+                if new_line[1] == '.word':
+                    data_counter += len(new_line)-2
+                else:
+                    data_counter += new_line[2]*4
+            if new_line[0] in self.map_instructions.keys():
+                code_counter += 4
+            else:
+                self.mapped_labels[new_line[0]] = code_counter
+                code_counter += 4
 
     def registers_mapping(self):
         reg_map = {

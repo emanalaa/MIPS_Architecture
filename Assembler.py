@@ -1,7 +1,12 @@
 import re
 
 
-def to_binary():
+def to_binary(number):
+    result = ""
+    while number != 0:
+        remainder = number % 2
+        number = number // 2
+        result = str(remainder) + result
     pass
 
 
@@ -12,9 +17,23 @@ class MipsAssembler:
         self.mapped_labels = dict()
 
     def read_file(self):
+        self.code = []
+        with open("file.txt") as file:  # esm el file aw el path lw ana msh 7atah f nafs el folder
+            for line in file:
+                if (line[0] == "#"):
+                    continue
+                else:
+                    line = line.strip()
+                    self.code.append(line)
+
         pass
 
     def write_file(self):
+        # machine_code di el list ely Menna Awad htedihany
+        with open("machine_code.txt", "w+") as f:
+            for item in machine_code:
+                f.write(item + "\n")
+
         pass
 
     def labels_mapping(self):

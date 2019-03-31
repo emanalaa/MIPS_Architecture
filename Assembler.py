@@ -7,7 +7,6 @@ def to_binary(number):
         remainder = number % 2
         number = number // 2
         result = str(remainder) + result
-    pass
 
 
 class MipsAssembler:
@@ -26,15 +25,11 @@ class MipsAssembler:
                     line = line.strip()
                     self.code.append(line)
 
-        pass
-
     def write_file(self):
         # machine_code di el list ely Menna Awad htedihany
         with open("machine_code.txt", "w+") as f:
             for item in machine_code:
                 f.write(item + "\n")
-
-        pass
 
     def labels_mapping(self):
         data_counter = 0

@@ -1,12 +1,13 @@
 import re
 
-
+#myversion
 def to_binary(number):
     result = ""
     while number != 0:
         remainder = number % 2
         number = number // 2
         result = str(remainder) + result
+    return result
 
 
 class MipsAssembler:
@@ -14,9 +15,13 @@ class MipsAssembler:
         self.reg_map = dict()
         self.map_instructions = dict()
         self.mapped_labels = dict()
+        self.data_machine_code_list = []
+        self.code = []
+        self.machine_code = []
+
 
     def read_file(self):
-        self.code = []
+
         with open("file.txt") as file:  # esm el file aw el path lw ana msh 7atah f nafs el folder
             for line in file:
                 if (line[0] == "#"):
@@ -138,3 +143,33 @@ class MipsAssembler:
 
 
             machine_code = machine_code + "\n" + m_code
+
+    def data_machine_code(self):
+
+        for line in self.code:
+            new_line = re.findall(r"[\w']+", line)
+            if new_line[0]==".text":
+                break
+            length_of_line=len(new_line)
+            length_of_line-=2
+            i=0
+            index=2
+            if new_line[1] == ".space" or new_line[1] == ".Space":
+                while i < length_of_line:
+                    j = 0
+                    while j < new_line[index]:
+                        data_code = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+                        self.data_machine_code_list.append(data_code)
+                        j += 1
+                    index+=1
+                    i+=1
+
+
+            elif new_line[1]==".word" or new_line[1]==".Word":
+                while i < length_of_line:
+                    bin=to_binary(new_line[index])
+                    data_code=bin.zfill(32) #for adding zeroes at the beginning of the string
+                    self.data_machine_code_list.append(data_code)
+                    index+=1
+                    i+=1
+

@@ -32,15 +32,15 @@ class MipsAssembler:
     def write_file(self):
         with open("machine_code.txt", "w+") as f:
             f.write("#Translation of Data Segment"+"\n")
-            d=0
+            d = 0
             for item in self.data_machine_code:
-                f.write("MEMORY("+ d +") <="+ item +"\n")
-                d+=1
-            i=0
+                f.write("MEMORY(" + d + ") <=" + item + "\n")
+                d += 1
+            i = 0
             f.write("#Translation of Code Segment" + "\n")
             for item in self.machine_code:
-                f.write("MEMORY("+ i +") <="+ item +"\n")
-                i+=1
+                f.write("MEMORY(" + i + ") <=" + item + "\n")
+                i += 1
         print("Done! Your output is in text file machine_code.txt!")
 
     def labels_mapping(self):

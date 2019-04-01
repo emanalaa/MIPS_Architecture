@@ -1,6 +1,6 @@
 import re
 
-#myversion
+
 def to_binary(number):
     result = ""
     while number != 0:
@@ -12,9 +12,9 @@ def to_binary(number):
 
 class MipsAssembler:
     def __init__(self):
-        self.reg_map = dict()
-        self.map_instructions = dict()
-        self.mapped_labels = dict()
+        self.reg_map = {}
+        self.map_instructions = {}
+        self.mapped_labels = {}
         self.data_machine_code_list = []
         self.code = []
         self.machine_code = []
@@ -60,7 +60,7 @@ class MipsAssembler:
         self.assembler()
 
     def registers_mapping(self):
-        reg_map = {
+        self.reg_map = {
           "$zero": "00000",
           "$at": "00001",
           "$v0": "00010",
@@ -142,18 +142,16 @@ class MipsAssembler:
                 m_code += test[1]
 
             self.machine_code = self.machine_code + "\n" + m_code
-            self.write_file()
 
-     def data_machine_code(self):
-
+    def data_machine_code(self):
         for line in self.code:
             new_line = re.findall(r"[\w']+", line)
-            if new_line[0]==".text":
+            if new_line[0] == ".text":
                 break
-            length_of_line=len(new_line)
-            length_of_line-=2
-            i=0
-            index=2
+            length_of_line = len(new_line)
+            length_of_line -= 2
+            i = 0
+            index = 2
             if new_line[1] == ".space" or new_line[1] == ".Space":
                 while i < length_of_line:
                     j = 0
@@ -161,18 +159,20 @@ class MipsAssembler:
                         data_code = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
                         self.data_machine_code_list.append(data_code)
                         j += 1
-                    index+=1
-                    i+=1
+                    index += 1
+                    i += 1
 
-
-            elif new_line[1]==".word" or new_line[1]==".Word":
+            elif new_line[1] == ".word" or new_line[1] == ".Word":
                 while i < length_of_line:
-                    bin=to_binary(new_line[index])
-                    data_code=bin.zfill(32) #for adding zeroes at the beginning of the string
+                    binary = to_binary(new_line[index])
+                    data_code = binary.zfill(32) #for adding zeroes at the beginning of the string
                     self.data_machine_code_list.append(data_code)
-                    index+=1
-                    i+=1
+                    index += 1
+                    i += 1
+
 
 mips_assembler = MipsAssembler()
 print("Welcome to our mips assembler.\nloading...")
 mips_assembler.read_file()
+mips_assembler.write_file()
+

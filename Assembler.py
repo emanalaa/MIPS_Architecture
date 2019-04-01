@@ -14,22 +14,24 @@ class MipsAssembler:
         self.reg_map = dict()
         self.map_instructions = dict()
         self.mapped_labels = dict()
+        self.code = list()
+        self.machine_code = list()
 
     def read_file(self):
-        self.code = []
-        with open("file.txt") as file:  # esm el file aw el path lw ana msh 7atah f nafs el folder
+        with open("Mips_code.txt") as file:
             for line in file:
-                if (line[0] == "#"):
+                if line[0] == "#":
                     continue
                 else:
                     line = line.strip()
                     self.code.append(line)
+        self.labels_mapping()
 
     def write_file(self):
-        # machine_code di el list ely Menna Awad htedihany
         with open("machine_code.txt", "w+") as f:
-            for item in machine_code:
+            for item in self.machine_code:
                 f.write(item + "\n")
+        print("Done! Your output is in text file machine_code.txt!")
 
     def labels_mapping(self):
         data_counter = 0
@@ -37,6 +39,8 @@ class MipsAssembler:
         text = False
         for line in self.code:
             new_line = re.findall(r"[\w']+", line)
+            if new_line[0] == '#':
+                continue
             while not text:
                 if new_line[0] == '.text':
                     text = True
@@ -51,6 +55,7 @@ class MipsAssembler:
             else:
                 self.mapped_labels[new_line[0]] = code_counter
                 code_counter += 4
+        self.assembler()
 
     def registers_mapping(self):
         reg_map = {
@@ -103,9 +108,7 @@ class MipsAssembler:
          "bne": ["000101", "none", "I"],
          "j": ["000010", "none", "J"]}
 
-
     def assembler(self):
-
         for lines in self.code:
             line = re.findall(r"[\w']+", lines)
             test = self.map_instruction[line[0]]
@@ -136,5 +139,11 @@ class MipsAssembler:
                 m_code += "00000"
                 m_code += test[1]
 
+            self.machine_code = self.machine_code + "\n" + m_code
+            self.write_file()
 
-            machine_code = machine_code + "\n" + m_code
+
+mips_assembler = MipsAssembler()
+
+print("Welcome to our mips assembler.\nloading...")
+mips_assembler.read_file()

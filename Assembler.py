@@ -20,13 +20,20 @@ class MipsAssembler:
         self.machine_code = []
 
     def read_file(self):
+        temp_line= []
         with open("Mips_code.txt") as file:
             for line in file:
                 if line[0] == "#":
                     continue
-                else:
-                    line = line.strip()
-                    self.code.append(line)
+                for x in line:
+                    if x == '#':
+                        break
+                    else:
+                        temp_line += x
+                line = "".join(temp_line)
+                line = line.strip()
+                self.code.append(line)
+                temp_line.clear()
         self.labels_mapping()
 
     def write_file(self):
@@ -51,15 +58,17 @@ class MipsAssembler:
             new_line = re.findall(r"[\w']+", line)
             if new_line[0] == '#':
                 continue
+            if new_line[0] == 'data':
+                continue
             while not text:
-                if new_line[0] == '.text':
+                if new_line[0] == 'text':
                     text = True
                     break
                 self.mapped_labels[new_line[0]] = data_counter
-                if new_line[1] == '.word':
+                if new_line[1] == 'word':
                     data_counter += len(new_line)-2
                 else:
-                    data_counter += new_line[2]*4
+                    data_counter += int(new_line[2])*4
             if new_line[0] in self.map_instructions.keys():
                 code_counter += 4
             else:

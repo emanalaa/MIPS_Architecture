@@ -46,6 +46,8 @@ class MipsAssembler:
         text = False
         for line in self.code:
             new_line = re.findall(r"[\w']+", line)
+            if not text and new_line[0] == 'data':
+                continue
             if len(new_line) == 0:
                 continue
             if new_line[0] == '#':
@@ -54,14 +56,13 @@ class MipsAssembler:
                 text = True
                 continue
             if not text:
-                self.mapped_labels[new_line[0]] = data_counter
                 if len(new_line) > 1:
                     if new_line[1] == 'word':
                         data_counter += len(new_line)-2
                     else:
                         data_counter += int(new_line[2])*4
             else:
-                if new_line[0] in self.map_instructions.keys():
+                if new_line[0] in self.map_instructions:
                     code_counter += 4
                 else:
                     self.mapped_labels[new_line[0]] = code_counter
@@ -187,7 +188,11 @@ class MipsAssembler:
 mips_assembler = MipsAssembler()
 print("Welcome to our mips assembler.\nloading...")
 mips_assembler.read_file()
+mips_assembler.registers_mapping()
+mips_assembler.instructions_mapping()
 mips_assembler.labels_mapping()
+for label in mips_assembler.mapped_labels:
+    print(label, mips_assembler.mapped_labels[label])
 mips_assembler.data_machine_code()
 mips_assembler.assembler()
 mips_assembler.write_file()

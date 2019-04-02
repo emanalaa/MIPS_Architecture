@@ -1,7 +1,8 @@
 .data
 fibs: .space 12 		# "array" of 12 words to contain fib values
 size: .word 12 			# size of "array"
-one: .word 1 four: .word 4
+one: .word 1 
+four: .word 4
 .text
 or $t0, $zero, $zero		# load address of array "fibs"
 lw $t5, size ($zero) 		# load array size
@@ -28,5 +29,4 @@ j loop
 exit: and $a0, $zero, $a0 	# first argument for output (array)
 add $a1, $zero, $t5 		# second argument for output (size)
 j output 			# jump to output routine.
-ret: sub $s0, $s0, $t8 # put last value of $s0 = -1
-				# ($s0 = 0 - 1)
+ret: sub $s0, $s0, $t8 # put last value of $s0 = -1 # ($s0 = 0 - 1)

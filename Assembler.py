@@ -1,15 +1,6 @@
 import re
 
 
-def to_binary(number):
-    result = ""
-    while number != 0:
-        remainder = number % 2
-        number = number // 2
-        result = str(remainder) + result
-    return result
-
-
 class MipsAssembler:
     def __init__(self):
         self.reg_map = {}
@@ -20,7 +11,7 @@ class MipsAssembler:
         self.machine_code = []
 
     def read_file(self):
-        temp_line= []
+        temp_line = []
         with open("Mips_code.txt") as file:
             for line in file:
                 if line[0] == "#":
@@ -34,7 +25,6 @@ class MipsAssembler:
                 line = line.strip()
                 self.code.append(line)
                 temp_line.clear()
-        self.labels_mapping()
 
     def write_file(self):
         with open("machine_code.txt", "w+") as f:
@@ -56,25 +46,26 @@ class MipsAssembler:
         text = False
         for line in self.code:
             new_line = re.findall(r"[\w']+", line)
+            if len(new_line) == 0:
+                continue
             if new_line[0] == '#':
                 continue
-            if new_line[0] == 'data':
+            if new_line[0] == 'text':
+                text = True
                 continue
-            while not text:
-                if new_line[0] == 'text':
-                    text = True
-                    break
+            if not text:
                 self.mapped_labels[new_line[0]] = data_counter
-                if new_line[1] == 'word':
-                    data_counter += len(new_line)-2
-                else:
-                    data_counter += int(new_line[2])*4
-            if new_line[0] in self.map_instructions.keys():
-                code_counter += 4
+                if len(new_line) > 1:
+                    if new_line[1] == 'word':
+                        data_counter += len(new_line)-2
+                    else:
+                        data_counter += int(new_line[2])*4
             else:
-                self.mapped_labels[new_line[0]] = code_counter
-                code_counter += 4
-        self.assembler()
+                if new_line[0] in self.map_instructions.keys():
+                    code_counter += 4
+                else:
+                    self.mapped_labels[new_line[0]] = code_counter
+                    code_counter += 4
 
     def registers_mapping(self):
         self.reg_map = {
@@ -130,7 +121,7 @@ class MipsAssembler:
     def assembler(self):
         for lines in self.code:
             line = re.findall(r"[\w']+", lines)
-            test = self.map_instruction[line[0]]
+            test = self.map_instructions[line[0]]
             m_code = test[0]
             if test[2] == "I":
                 if line[0] == "lw" or line[0] == "sw":
@@ -163,25 +154,30 @@ class MipsAssembler:
     def data_machine_code(self):
         for line in self.code:
             new_line = re.findall(r"[\w']+", line)
-            if new_line[0] == ".text":
+            if len(new_line) == 0:
+                continue
+            if new_line[0] == "text":
                 break
             length_of_line = len(new_line)
             length_of_line -= 2
             i = 0
             index = 2
-            if new_line[1] == ".space" or new_line[1] == ".Space":
+
+            if len(new_line) < 2:
+                continue
+
+            if new_line[1] == "space" or new_line[1] == "Space":
                 while i < length_of_line:
                     j = 0
-                    while j < new_line[index]:
+                    while j < int(new_line[index]) and index < len(new_line):
                         data_code = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
                         self.data_machine_code_list.append(data_code)
                         j += 1
                     index += 1
                     i += 1
-
-            elif new_line[1] == ".word" or new_line[1] == ".Word":
+            elif new_line[1] == "word" or new_line[1] == "Word":
                 while i < length_of_line:
-                    binary = to_binary(new_line[index])
+                    binary = bin(int(new_line[index]))
                     data_code = binary.zfill(32) #for adding zeroes at the beginning of the string
                     self.data_machine_code_list.append(data_code)
                     index += 1
@@ -191,5 +187,8 @@ class MipsAssembler:
 mips_assembler = MipsAssembler()
 print("Welcome to our mips assembler.\nloading...")
 mips_assembler.read_file()
+mips_assembler.labels_mapping()
+mips_assembler.data_machine_code()
+mips_assembler.assembler()
 mips_assembler.write_file()
 

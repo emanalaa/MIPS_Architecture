@@ -1,0 +1,59 @@
+Running: C:\Xilinx\14.5\ISE_DS\ISE\bin\nt64\unwrapped\fuse.exe -intstyle ise -incremental -lib secureip -o C:/Users/PC/Desktop/Year 3/2nd Term/Archi/last/RobotTest_isim_beh.exe -prj C:/Users/PC/Desktop/Year 3/2nd Term/Archi/last/RobotTest_beh.prj work.RobotTest 
+ISim P.58f (signature 0x7708f090)
+Number of CPUs detected in this system: 4
+Turning on mult-threading, number of parallel sub-compilation jobs: 8 
+Determining compilation order of HDL files
+Parsing VHDL file "C:/Users/PC/Desktop/Year 3/2nd Term/Archi/last/Project_Package.vhd" into library work
+Parsing VHDL file "C:/Users/PC/Desktop/Year 3/2nd Term/Archi/last/Mux4.vhd" into library work
+Parsing VHDL file "C:/Users/PC/Desktop/Year 3/2nd Term/Archi/last/Mux2.vhd" into library work
+Parsing VHDL file "C:/Users/PC/Desktop/Year 3/2nd Term/Archi/last/adder.vhd" into library work
+Parsing VHDL file "C:/Users/PC/Desktop/Year 3/2nd Term/Archi/last/OneBitAlu.vhd" into library work
+Parsing VHDL file "C:/Users/PC/Desktop/Year 3/2nd Term/Archi/last/Mux32.vhd" into library work
+Parsing VHDL file "C:/Users/PC/Desktop/Year 3/2nd Term/Archi/last/GenericReg.vhd" into library work
+Parsing VHDL file "C:/Users/PC/Desktop/Year 3/2nd Term/Archi/last/Decoder.vhd" into library work
+Parsing VHDL file "C:/Users/PC/Desktop/Year 3/2nd Term/Archi/last/sign_extension.vhd" into library work
+Parsing VHDL file "C:/Users/PC/Desktop/Year 3/2nd Term/Archi/last/RegisterFile.vhd" into library work
+Parsing VHDL file "C:/Users/PC/Desktop/Year 3/2nd Term/Archi/last/ReadMux.vhd" into library work
+Parsing VHDL file "C:/Users/PC/Desktop/Year 3/2nd Term/Archi/last/MUXRegDst.vhd" into library work
+Parsing VHDL file "C:/Users/PC/Desktop/Year 3/2nd Term/Archi/last/InstMem.V3.vhd" into library work
+Parsing VHDL file "C:/Users/PC/Desktop/Year 3/2nd Term/Archi/last/Datamem.V4.vhd" into library work
+Parsing VHDL file "C:/Users/PC/Desktop/Year 3/2nd Term/Archi/last/ControlUnit.vhd" into library work
+Parsing VHDL file "C:/Users/PC/Desktop/Year 3/2nd Term/Archi/last/ALUControl.vhd" into library work
+Parsing VHDL file "C:/Users/PC/Desktop/Year 3/2nd Term/Archi/last/ALU.vhd" into library work
+Parsing VHDL file "C:/Users/PC/Desktop/Year 3/2nd Term/Archi/last/MainModule.vhd" into library work
+Parsing VHDL file "C:/Users/PC/Desktop/Year 3/2nd Term/Archi/last/RobotTest.vhd" into library work
+Starting static elaboration
+Completed static elaboration
+Compiling package standard
+Compiling package std_logic_1164
+Compiling package project_package
+Compiling package std_logic_arith
+Compiling package std_logic_unsigned
+Compiling package std_logic_signed
+Compiling package textio
+Compiling package std_logic_textio
+Compiling architecture behavioral of entity reg [\reg(32)\]
+Compiling architecture behavioral of entity Mux2 [mux2_default]
+Compiling architecture behavioral of entity adder [adder_default]
+Compiling architecture behavioral of entity Mux4 [mux4_default]
+Compiling architecture behavioral of entity OneBitAlu [onebitalu_default]
+Compiling architecture behavioral of entity ALU [alu_default]
+Compiling architecture behavioral of entity INSTRMEMORY [\INSTRMEMORY(64,32,32)\]
+Compiling architecture behavioral of entity ControlUnit [controlunit_default]
+Compiling architecture behavioral of entity MUXRegDst [muxregdst_default]
+Compiling architecture behavioral of entity Mux32 [mux32_default]
+Compiling architecture behavioral of entity Decoder [decoder_default]
+Compiling architecture behavioral of entity RegisterFile [registerfile_default]
+Compiling architecture behavioral of entity sign_extension [sign_extension_default]
+Compiling architecture behavioral of entity ReadMux [readmux_default]
+Compiling architecture behavioral of entity ALUControl [alucontrol_default]
+Compiling architecture behavioral of entity DATAMEMORY [\DATAMEMORY(64,32,32)\]
+Compiling architecture behavioral of entity MainModule [mainmodule_default]
+Compiling architecture behavior of entity robottest
+Time Resolution for simulation is 1ps.
+Waiting for 18 sub-compilation(s) to finish...
+WARNING:Simulator - Unable to copy libPortabilityNOSH.dll to the simulation executable directory: boost::filesystem::copy_file: The system cannot find the path specified, "isim\RobotTest_isim_beh.exe.sim\libPortability.dll".
+Compiled 43 VHDL Units
+Built simulation executable C:/Users/PC/Desktop/Year 3/2nd Term/Archi/last/RobotTest_isim_beh.exe
+Fuse Memory Usage: 35820 KB
+Fuse CPU Usage: 1046 ms

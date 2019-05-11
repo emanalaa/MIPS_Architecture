@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -lib "secureip" -o "C:/Users/PC/Desktop/Year 3/2nd Term/Archi/last/RobotTest_isim_beh.exe" -prj "C:/Users/PC/Desktop/Year 3/2nd Term/Archi/last/RobotTest_beh.prj" "work.RobotTest" 
